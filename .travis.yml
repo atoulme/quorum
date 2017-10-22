@@ -39,7 +39,6 @@ matrix:
         - sudo chown root:$USER /etc/fuse.conf
         - go run build/ci.go install
         - go run build/ci.go test -coverage -misspell
-
     - os: osx
       go: 1.9.x
       sudo: required
