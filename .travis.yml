@@ -24,7 +24,7 @@ matrix:
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
-        - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz constellation-0.2.0-ubuntu1604.tar.xz
+        - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
         - chmod +x constellation-0.2.0-ubuntu1604/constellation-node
