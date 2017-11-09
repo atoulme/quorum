@@ -12,6 +12,12 @@ matrix:
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
+        - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz
+        - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
+        - mv constellation-0.2.0-ubuntu1604 constellation
+        - sudo chmod +x $PWD/constellation/constellation-node
+        - export PATH=$PWD/constellation:$PATH
+        - source ~/.bashrc
         - go run build/ci.go install
         - go run build/ci.go test -coverage
 
@@ -43,6 +49,12 @@ matrix:
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
+        - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz
+        - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
+        - mv constellation-0.2.0-ubuntu1604 constellation
+        - sudo chmod +x $PWD/constellation/constellation-node
+        - export PATH=$PWD/constellation:$PATH
+        - source ~/.bashrc
         - go run build/ci.go install
         - go run build/ci.go test -coverage -misspell
     - os: osx
@@ -52,6 +64,12 @@ matrix:
         - brew update
         - brew install caskroom/cask/brew-cask
         - brew cask install osxfuse
+        - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz
+        - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
+        - mv constellation-0.2.0-ubuntu1604 constellation
+        - sudo chmod +x $PWD/constellation/constellation-node
+        - export PATH=$PWD/constellation:$PATH
+        - source ~/.bashrc
         - go run build/ci.go install
         - go run build/ci.go test -coverage -misspell
 
