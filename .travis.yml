@@ -36,6 +36,13 @@ matrix:
         - sudo chmod +x $PWD/constellation/constellation-node
         - export PATH=$PWD/constellation:$PATH
         - source ~/.bashrc
+        - mkdir -p $PWD/qdata/constellation1
+        - mkdir $PWD/keys
+        - cd keys
+        - echo "BULeR8JyUWhiuuCMU/HLA0Q5pzkYT+cHII3ZKBey3Bo=" > tm1.pub
+        - echo "{\"\data\"\:{\"\bytes\"\:\"\Wl+xSyXVuuqzpvznOS7dOobhcn4C5auxkFRi7yLtgtA=\"\},\"\type\"\:\"\unlocked\"\}" > tm1.key
+        - echo "8SjRHlUBe4hAmTk3KDeJ96RhN+s10xRrHDrxEi1O5W0=" > tm1a.pub
+        - echo "{\"\data\"\:{\"\bytes\"\:\"\wGEar7J9G0JAgdisp61ZChyrJWeW2QPyKvecjjeVHOY=\"\},\"\type\"\:\"\unlocked\"\}" > tm1.key
         - go run build/ci.go install
         - go run build/ci.go test -coverage
 
