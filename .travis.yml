@@ -27,10 +27,10 @@ matrix:
         - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
-        - sudo chmod +x $PWD/constellation-0.2.0-ubuntu1604/constellation-node
-        - echo "PATH=\$PATH:"$PWD/constellation-0.2.0-ubuntu1604 >> ~/.bashrc
+        - sudo chmod +x $PWD/constellation/constellation-node
+        - echo "PATH=\$PATH:"$PWD/constellation >> ~/.bashrc
         - source ~/.bashrc
-        - export PATH=$PWD/constellation-0.2.0-ubuntu1604:$PATH
+        - export PATH=$PWD/constellation:$PATH
         - go run build/ci.go install
         - go run build/ci.go test -coverage
 
