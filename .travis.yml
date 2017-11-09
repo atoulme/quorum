@@ -28,9 +28,8 @@ matrix:
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
         - sudo chmod +x $PWD/constellation/constellation-node
-        - echo "PATH=\$PATH:"$PWD/constellation >> ~/.bashrc
-        - source ~/.bashrc
         - export PATH=$PWD/constellation:$PATH
+        - source ~/.bashrc
         - go run build/ci.go install
         - go run build/ci.go test -coverage
 
