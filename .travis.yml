@@ -27,7 +27,7 @@ matrix:
         - wget https://github.com/jpmorganchase/constellation/releases/download/v0.2.0/constellation-0.2.0-ubuntu1604.tar.xz
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
-        - chmod +x constellation-0.2.0-ubuntu1604/constellation-node
+        - sudo chmod +x constellation-0.2.0-ubuntu1604/constellation-node
         - echo "PATH=\$PATH:"$PWD/constellation-0.2.0-ubuntu1604 >> ~/.bashrc
         - source ~/.bashrc
         - export PATH=$PWD/constellation-0.2.0-ubuntu1604:$PATH
