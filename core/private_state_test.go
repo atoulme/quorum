@@ -75,7 +75,7 @@ func ExampleMakeCallHelper() {
 var constellationCfgTemplate = template.Must(template.New("t").Parse(`
 	url = "http://127.0.0.1:9000/"
 	port = 9000
-	socketPath = "{{.RootDir}}/qdata/tm1.ipc"
+	socketPath = "tm1.ipc"
 	otherNodeUrls = []
 	publicKeyPath = "{{.RootDir}}/keys/tm1.pub"
 	privateKeyPath = "{{.RootDir}}/keys/tm1.key"
