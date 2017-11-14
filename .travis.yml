@@ -9,6 +9,10 @@ matrix:
       go: 1.7.x
       script:
         - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install fuse
+        - sudo add-apt-repository ppa:ondrej/php -y
+        - sudo apt-get update -q
+        - sudo apt-get install libsodium-dev -y
+        - sudo apt-get install libleveldb-dev -y
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
@@ -16,8 +20,9 @@ matrix:
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
         - sudo chmod +x $PWD/constellation/constellation-node
-        - export PATH=$PWD/constellation:$PATH
         - source ~/.bashrc
+        - export PATH=$PWD/constellation:$PATH
+        - constellation-node --version
         - go run build/ci.go install
         - go run build/ci.go test -coverage
 
@@ -27,6 +32,10 @@ matrix:
       go: 1.8.x
       script:
         - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install fuse
+        - sudo add-apt-repository ppa:ondrej/php -y
+        - sudo apt-get update -q
+        - sudo apt-get install libsodium-dev -y
+        - sudo apt-get install libleveldb-dev -y
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
@@ -34,15 +43,9 @@ matrix:
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
         - sudo chmod +x $PWD/constellation/constellation-node
-        - export PATH=$PWD/constellation:$PATH
         - source ~/.bashrc
-        - mkdir -p $PWD/qdata/constellation1
-        - mkdir $PWD/keys
-        - cd keys
-        - echo "BULeR8JyUWhiuuCMU/HLA0Q5pzkYT+cHII3ZKBey3Bo=" > tm1.pub
-        - echo "{\"\data\"\:{\"\bytes\"\:\"\Wl+xSyXVuuqzpvznOS7dOobhcn4C5auxkFRi7yLtgtA=\"\},\"\type\"\:\"\unlocked\"\}" > tm1.key
-        - echo "8SjRHlUBe4hAmTk3KDeJ96RhN+s10xRrHDrxEi1O5W0=" > tm1a.pub
-        - echo "{\"\data\"\:{\"\bytes\"\:\"\wGEar7J9G0JAgdisp61ZChyrJWeW2QPyKvecjjeVHOY=\"\},\"\type\"\:\"\unlocked\"\}" > tm1.key
+        - export PATH=$PWD/constellation:$PATH
+        - constellation-node --version
         - go run build/ci.go install
         - go run build/ci.go test -coverage
 
@@ -53,6 +56,10 @@ matrix:
       go: 1.9.x
       script:
         - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install fuse
+        - sudo add-apt-repository ppa:ondrej/php -y
+        - sudo apt-get update -q
+        - sudo apt-get install libsodium-dev -y
+        - sudo apt-get install libleveldb-dev -y
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
@@ -60,7 +67,6 @@ matrix:
         - tar -xf constellation-0.2.0-ubuntu1604.tar.xz
         - mv constellation-0.2.0-ubuntu1604 constellation
         - sudo chmod +x $PWD/constellation/constellation-node
-        - export PATH=$PWD/constellation:$PATH
         - source ~/.bashrc
         - go run build/ci.go install
         - go run build/ci.go test -coverage -misspell
@@ -76,7 +82,7 @@ matrix:
         - mv constellation-0.2.0-ubuntu1604 constellation
         - sudo chmod +x $PWD/constellation/constellation-node
         - export PATH=$PWD/constellation:$PATH
-        - source ~/.bashrc
+        - constellation-node --version
         - go run build/ci.go install
         - go run build/ci.go test -coverage -misspell
 
@@ -220,7 +226,5 @@ script:
 
 notifications:
   webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/e09ccdce1048c5e03445
     on_success: change
     on_failure: always
