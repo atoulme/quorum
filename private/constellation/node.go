@@ -75,7 +75,10 @@ func (c *Client) doJson(path string, apiReq interface{}) (*http.Response, error)
 	}
 	req.Header.Set("Content-Type", "application/json")
 	res, err := c.httpClient.Do(req)
-	if err == nil && res.StatusCode != 200 {
+	if err != nil {
+		return nil, err
+	}
+	if res.StatusCode != 200 {
 		return nil, fmt.Errorf("Non-200 status code: %+v", res)
 	}
 	return res, err
