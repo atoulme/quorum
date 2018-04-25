@@ -2,8 +2,8 @@ package constellation
 
 import (
 	"bytes"
+	//	"compress/gzip"
 	"encoding/base64"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/tv42/httpunix"
@@ -47,6 +47,21 @@ func unixClient(socketPath string) *http.Client {
 	}
 }
 
+func httpTransport() *http.Transport {
+	return &http.Transport{
+		MaxIdleConns:        100,
+		MaxIdleConnsPerHost: 100,
+		IdleConnTimeout:     90 * time.Second,
+	}
+}
+
+func httpClient() *http.Client {
+	return &http.Client{
+		Timeout:   time.Second * 5,
+		Transport: httpTransport(),
+	}
+}
+
 func UpCheck(c *Client) error {
 	res, err := c.httpClient.Get(c.BaseURL + "upcheck")
 	if err != nil {
@@ -63,29 +78,16 @@ type Client struct {
 	BaseURL    string
 }
 
-func (c *Client) doJson(path string, apiReq interface{}) (*http.Response, error) {
-	buf := new(bytes.Buffer)
-	err := json.NewEncoder(buf).Encode(apiReq)
-	if err != nil {
-		return nil, err
-	}
-	req, err := http.NewRequest("POST", c.BaseURL+path, buf)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Content-Type", "application/json")
-	res, err := c.httpClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if res.StatusCode != 200 {
-		return nil, fmt.Errorf("Non-200 status code: %+v", res)
-	}
-	return res, err
-}
-
 func (c *Client) SendPayload(pl []byte, b64From string, b64To []string) ([]byte, error) {
 	buf := bytes.NewBuffer(pl)
+	// var buf bytes.Buffer
+	//   gzippedPayload := gzip.NewWriter(&buf)
+	//   if _, err := gzippedPayload.Write(pl); err != nil {
+	//     return nil, err
+	//   }
+	//   if err := gzippedPayload.Close(); err != nil {
+	//     return nil, err
+	//   }
 	req, err := http.NewRequest("POST", c.BaseURL+"sendraw", buf)
 	if err != nil {
 		return nil, err
@@ -95,6 +97,8 @@ func (c *Client) SendPayload(pl []byte, b64From string, b64To []string) ([]byte,
 	}
 	req.Header.Set("c11n-to", strings.Join(b64To, ","))
 	req.Header.Set("Content-Type", "application/octet-stream")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate")
+	//req.Header.Set("Content-Encoding", "gzip")
 	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -112,6 +116,7 @@ func (c *Client) ReceivePayload(key []byte) ([]byte, error) {
 		return nil, err
 	}
 	req.Header.Set("c11n-key", base64.StdEncoding.EncodeToString(key))
+	req.Header.Set("Accept-Encoding", "gzip, deflate")
 	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -131,7 +136,7 @@ func NewClient(config *Config) (*Client, error) {
 		client = unixClient(socketPath)
 		baseURL = "http+unix://c/"
 	} else {
-		client = http.DefaultClient
+		client = httpClient()
 		baseURL = config.BaseURL
 		if baseURL[len(baseURL)-1:] != "/" {
 			baseURL += "/"
